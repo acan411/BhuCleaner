@@ -1,0 +1,120 @@
+/* BHuCleaner — 知乎页面样式
+ * 所有规则都以 html[data-zc-*] 开头，开关由 content.js 写在 <html> 上。
+ * 知乎改版后，只需维护下面的「广告选择器清单」和「宽度规则」两块。
+ */
+
+/* ========== 1. 广告选择器清单 ========== */
+/* 命中即整体隐藏：广告卡片、广告位容器、带广告标记的节点 */
+html[data-zc-hide-ads] .TopstoryItem--advertCard,
+html[data-zc-hide-ads] .Adblock,
+html[data-zc-hide-ads] .KfeCollection,
+html[data-zc-hide-ads] [data-za-module="AdItem"],
+html[data-zc-hide-ads] [data-za-detail-view-path="广告"],
+html[data-zc-hide-ads] [data-ad-id],
+html[data-zc-hide-ads] [class*="advert" i],
+html[data-zc-hide-ads] [class*="sponsor" i],
+html[data-zc-hide-ads] [data-zc-hidden="1"] {
+  display: none !important;
+}
+
+/* 广告嵌在卡片内部时，把整张卡片一起隐藏 */
+html[data-zc-hide-ads] .Card:has([data-za-module="AdItem"]),
+html[data-zc-hide-ads] .Card:has([data-za-detail-view-path="广告"]),
+html[data-zc-hide-ads] .TopstoryItem:has([class*="advert" i]),
+html[data-zc-hide-ads] .TopstoryItem:has([class*="sponsor" i]) {
+  display: none !important;
+}
+
+/* 首页顶部横幅广告：这一条不做开关门控。
+ * 类名只对应品牌广告位，即使 content.js 未及时执行，也能先隐藏，避免刷新后留白。 */
+[class*="PcTopFeedBanner" i],
+.Pc-Business-Card-PcTopFeedBanner {
+  display: none !important;
+}
+
+/* 信息流懒加载的广告卡片：图片外层整张卡片一起隐藏，避免只隐藏图片留下空白 */
+html[data-zc-hide-ads] .Card:has(.AdvertImg),
+html[data-zc-hide-ads] .TopstoryItem:has(.AdvertImg) {
+  display: none !important;
+}
+
+/* 待确认浮层（当前不生效）：
+ * 在 DevTools 里选中知乎的浮动广告/引导浮层，拿到 class 后按下面格式放开：
+
+html[data-zc-hide-ads] .替换成真实类名 {
+  display: none !important;
+}
+
+ */
+
+/* ========== 2. 内容区加宽 ========== */
+html[data-zc-widen] {
+  --zc-width: 1440px;
+  --zc-side: 316px;
+}
+
+/* 去掉右侧栏（创作中心、热搜、推荐关注等整列）
+ * 知乎新版右栏用哈希类名，且滚动后内联 position 会从 sticky 变 relative，
+ * 因此不能依赖 [style*="sticky"]，优先用容器类名兜底 */
+html[data-zc-widen] .TopstorySideBar,
+html[data-zc-widen] .Question-sideColumn,
+html[data-zc-widen] .Profile-sideColumn,
+html[data-zc-widen] .GlobalSideBar,
+html[data-zc-widen] [class*="GlobalSideBar" i],
+html[data-zc-widen] .css-18888ld,
+html[data-zc-widen] div[style*="position: sticky"]:has(.CreatorEntrance),
+html[data-zc-widen] div[style*="position:sticky"]:has(.CreatorEntrance) {
+  display: none !important;
+}
+
+/* 首页信息流 */
+html[data-zc-widen] .Topstory-container {
+  width: 100% !important;
+  max-width: min(var(--zc-width), 94vw) !important;
+}
+
+html[data-zc-widen] .Topstory-mainColumn {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* 问题页 / 回答页主栏：侧栏隐藏后占满整行 */
+html[data-zc-widen] .Question-mainColumn {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* ========== 3. 顶部导航精简 ========== */
+/* 优先用 href 定位，抗哈希类名改版；末尾几条为已确认的类名 */
+html[data-zc-slim-nav] a[href$="/column-square"],
+html[data-zc-slim-nav] a[href$="/ring-feeds"],
+html[data-zc-slim-nav] a[href$="/project-square"],
+html[data-zc-slim-nav] a[href*="/fiore/h5/vip-web"],
+html[data-zc-slim-nav] .css-o9g3k,
+html[data-zc-slim-nav] .css-cl7d7k,
+html[data-zc-slim-nav] .css-sbhx97,
+html[data-zc-slim-nav] .css-x84wzl,
+/* 顶部私信入口：只按 href / aria-label 精确匹配，避免误伤消息提醒等复用同一哈希类的按钮 */
+html[data-zc-slim-nav] button[href*="/messages"],
+html[data-zc-slim-nav] [aria-label$="条私信"],
+html[data-zc-slim-nav] [aria-label="私信"],
+/* 首页"分享此刻的想法"发帖卡片 */
+html[data-zc-slim-nav] .WriteArea {
+  display: none !important;
+}
+
+/* 顶部右区排列：让 消息 / 私信 / 创作中心 紧贴头像左侧 */
+html[data-zc-slim-nav] .AppHeader .css-lgijre {
+  align-items: center;
+}
+
+html[data-zc-slim-nav] .AppHeader .css-1ndlr1n {
+  display: none !important;
+}
+
+html[data-zc-slim-nav] .AppHeader .css-1vbrp2j {
+  margin-left: auto;
+  margin-right: 8px;
+}

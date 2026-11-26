@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "BHuCleaner",
+  "version": "0.1.0",
+  "description": "知乎网页去浮动广告，并把主内容区加宽到宽屏友好。",
+  "permissions": ["storage"],
+  "host_permissions": ["*://*.zhihu.com/*"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "BHuCleaner",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.zhihu.com/*"],
+      "css": ["src/content/content.css"],
+      "js": ["src/content/content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ]
+}

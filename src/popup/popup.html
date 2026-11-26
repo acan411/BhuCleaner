@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>BHuCleaner</title>
+  </head>
+  <body>
+    <header>
+      <h1>BHuCleaner</h1>
+      <p>知乎网页清理</p>
+    </header>
+
+    <label class="row">
+      <span class="meta">
+        <b>隐藏浮动广告</b>
+        <small>广告卡片与浮层</small>
+      </span>
+      <input type="checkbox" id="hideAds" />
+    </label>
+
+    <label class="row">
+      <span class="meta">
+        <b>加宽内容区</b>
+        <small>隐藏右栏，最多 1440px</small>
+      </span>
+      <input type="checkbox" id="widen" />
+    </label>
+
+    <label class="row">
+      <span class="meta">
+        <b>精简界面元素</b>
+        <small>导航、私信、发帖卡片</small>
+      </span>
+      <input type="checkbox" id="slimNav" />
+    </label>
+
+    <footer id="status">设置实时生效</footer>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
